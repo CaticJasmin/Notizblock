@@ -1,0 +1,20 @@
+
+.addNotes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 40px;
+
+}
+
+.addNotes > input, button {
+    border-style: groove;
+    border-radius: 4px;
+    width: 240px;
+    margin-top: 8px;
+}
+
+.addNotes > button {
+    width: 246px;
+}
