@@ -15,21 +15,6 @@ function init() {
     renderNotes();
 }
 
-function getFromLocalStorage() {
-    let myArr = JSON.parse(localStorage.getItem("notesTitles"));
-    let myArr2 = JSON.parse(localStorage.getItem("notes"));
-
-    if (myArr, myArr2 = []) {
-        notes, notesTitles != myArr;
-    }
-}
-
-function saveToLocalStorage() {
-    localStorage.setItem("notes", JSON.stringify(notes));
-    localStorage.setItem("notesTitles", JSON.stringify(notesTitles));
-}
-
-
 
 // How to show the notes?
 function renderNotes() {
@@ -42,18 +27,6 @@ function renderNotes() {
 }
 
 
-
-// How to remove note from existing notes array to trash or archive?
-function moveNoteToTrash(indexNote) {
-    let trashNote = notes.splice(indexNote, 1);
-    trashNotes.push(trashNote);
-    let trashNoteTitle = notesTitles.splice(indexNote, 1);
-    trashNotesTitles.push(trashNoteTitle);
-
-    renderNotes();
-    renderTrashNotes();
-}
-
 function renderTrashNotes() {
     let trashContentRef = document.getElementById('trash_content');
     trashContentRef.innerHTML = "";
@@ -63,6 +36,29 @@ function renderTrashNotes() {
     }
 }
 
+
+function renderArchiveNotes() {
+    // Archive is shown in new window
+    let archiveContentRef = document.getElementById('archive_content');
+    archiveContentRef.innerHTML = `<h2>Archive</h2><button class="btn" onclick="hideWindow()">X</button>`;
+
+    for (let indexArchiveNote = 0; indexArchiveNote < archiveNotes.length; indexArchiveNote++) {
+        archiveContentRef.innerHTML += getArchiveNoteTemplate(indexArchiveNote);
+    }
+}
+
+
+
+// How to move note to trash/archive?
+function moveNoteToTrash(indexNote) {
+    let trashNote = notes.splice(indexNote, 1);
+    trashNotes.push(trashNote);
+    let trashNoteTitle = notesTitles.splice(indexNote, 1);
+    trashNotesTitles.push(trashNoteTitle);
+
+    renderNotes();
+    renderTrashNotes();
+}
 
 
 function moveNoteToArchive(indexNote) {
@@ -75,21 +71,6 @@ function moveNoteToArchive(indexNote) {
     renderArchiveNotes();
 }
 
-function renderArchiveNotes() {
-    // Archive is shown in new window
-    let archiveContentRef = document.getElementById('archive_content');
-    archiveContentRef.innerHTML = `<h2>Archive</h2><button class="btn" onclick="hideWindow()">X</button>`;
-
-    for (let indexArchiveNote = 0; indexArchiveNote < archiveNotes.length; indexArchiveNote++) {
-        archiveContentRef.innerHTML += getArchiveNoteTemplate(indexArchiveNote);
-    }
-}
-
-function hideWindow() {
-    let archiveContentRef = document.getElementById('archive_content');
-    archiveContentRef.innerHTML = "";
-}
-
 
 
 // How to delete the note from trash/archive?
@@ -98,6 +79,7 @@ function deleteNote(indexTrashNote) {
     renderTrashNotes();
 }
 
+
 function deleteNoteFromArchive(indexArchiveNote) {
     archiveNotes.splice(indexArchiveNote, 1);
     renderArchiveNotes();
@@ -105,7 +87,15 @@ function deleteNoteFromArchive(indexArchiveNote) {
 
 
 
-// How to add note/noteTitle to existing notes/notesTitles array and save it to local storage?
+// How to hide archive window?
+function hideWindow() {
+    let archiveContentRef = document.getElementById('archive_content');
+    archiveContentRef.innerHTML = "";
+}
+
+
+
+// How to add note/noteTitle and save it to local storage?
 function addNoteandNoteTitle() {
     let noteTitleInputRef = document.getElementById('noteTitle_input');
     let noteInputRef = document.getElementById('note_input');
@@ -121,5 +111,22 @@ function addNoteandNoteTitle() {
     noteInputRef.value = "";
 }
 
+
+
+// How to save to/get from local storage?
+function saveToLocalStorage() {
+    localStorage.setItem("notes", JSON.stringify(notes));
+    localStorage.setItem("notesTitles", JSON.stringify(notesTitles));
+}
+
+
+function getFromLocalStorage() {
+    let myArr = JSON.parse(localStorage.getItem("notesTitles"));
+    let myArr2 = JSON.parse(localStorage.getItem("notes"));
+
+    if (myArr, myArr2 = []) {
+        notes, notesTitles != myArr;
+    }
+}
 
 
