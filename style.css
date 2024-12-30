@@ -11,7 +11,7 @@
     margin: 2px;
 }
 
-.trash_content>p {
+.trash_content  {
     width: 160px;
     display: flex;
     align-items: start;
